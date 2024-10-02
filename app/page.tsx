@@ -1,10 +1,9 @@
-import PatientForm from "@/components/forms/PatientForm";
+// import CurrentYear from "@/components/CurrentYearComponent";
+import { PatientForm } from "@/components/forms/PatientForm";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  const year = new Date().getFullYear();
-
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
@@ -20,7 +19,7 @@ export default function Home() {
           <PatientForm />
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
-              &copy; {year} Pulse-It
+              &copy; 2024 Pulse-It
             </p>
             <Link href="/?admin=true" className="text-green-500">
               Admin

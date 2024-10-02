@@ -12,6 +12,7 @@ const fontSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Pulse-It",
   description: "A healthcare management system",
+  icons: "/favicon.ico",
 };
 
 export default function RootLayout({
