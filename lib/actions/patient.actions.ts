@@ -80,3 +80,17 @@ export const registerPatient = async ({
     console.error("An error occurred while creating a new patient:", error);
   }
 };
+
+export const getPatient = async (userId: string) => {
+  try {
+    const patient = await database.listDocuments(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      [Query.equal("userId", userId)]
+    );
+
+    return parseStringify(patient.documents[0]);
+  } catch (error: any) {
+    console.error("Error getting patient:", error);
+  }
+};
