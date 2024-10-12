@@ -1,3 +1,4 @@
+import StatCard from "@/components/StatCard";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -24,7 +25,26 @@ const Admin = () => {
             Manage New and Existing Appointments Here.
           </p>
         </section>
-        <section className="admin-stat"></section>
+        <section className="admin-stat">
+          <StatCard 
+            type='appointments'
+            count={5}
+            label='Scheduled Appointments'
+            icon='/assets/icons/appointments.svg'
+          />
+          <StatCard 
+            type='pending'
+            count={14}
+            label='Pending Appointments'
+            icon='/assets/icons/pending.svg'
+          />
+          <StatCard 
+            type='cancelled'
+            count={3}
+            label='Cancelled Appointments'
+            icon='/assets/icons/cancelled.svg'
+          />
+        </section>
       </main>
     </div>
   );
