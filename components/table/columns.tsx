@@ -17,35 +17,33 @@ export const columns: ColumnDef<Appointment>[] = [
   {
     accessorKey: "patient",
     header: "Patient",
-    cell: ({ row }) => (
-      <p className="text-medium-14">{row.original.patient.name}</p>
+    cell: ({ row: { original: data } }) => (
+      <p className="text-medium-14">{data.patient.name}</p>
     ),
   },
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => (
+    cell: ({ row: { original: data } }) => (
       <div className="min-w-[115px]">
-        <StatusBadge status={row.original.status} />
+        <StatusBadge status={data.status} />
       </div>
     ),
   },
   {
     accessorKey: "schedule",
     header: "Appointment",
-    cell: ({ row }) => (
+    cell: ({ row: { original: data } }) => (
       <p className="text-14-regular min-2-[100px]">
-        {formatDateTime(row.original.schedule).dateTime}
+        {formatDateTime(data.schedule).dateTime}
       </p>
     ),
   },
   {
     accessorKey: "primaryPhysician",
     header: () => "Doctor",
-    cell: ({ row }) => {
-      const doctor = Doctors.find(
-        (doc) => doc.name === row.original.primaryPhysician
-      );
+    cell: ({ row: { original: data } }) => {
+      const doctor = Doctors.find((doc) => doc.name === data.primaryPhysician);
 
       return (
         <div className="flex items-center gap-3">
