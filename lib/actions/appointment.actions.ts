@@ -7,10 +7,11 @@ import {
   DATABASE_ID,
   // ENDPOINT,
   APPOINTMENT_COLLECTION_ID,
+  message,
   // PROJECT_ID,
   // users,
 } from "../appwrite.config";
-import { parseStringify } from "../utils";
+import { formatDateTime, parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
 import { revalidatePath } from "next/cache";
 
@@ -96,11 +97,36 @@ export const updateAppointment = async ({
 
     if (!updatedAppointment) throw new Error("Appointment not found");
 
-    // TODO SMS Notification
+    const smsMessage = `
+      Hi, it's Pulse-It. 
+      ${
+        type === "schedule"
+          ? `Your appointment has been scheduled for ${
+              formatDateTime(appointment.schedule!).dateTime
+            } with Dr. ${appointment.primaryPhysician!}`
+          : `We regret to inform you that your appointment has been cancelled due to following reason: ${appointment.cancellationReason!}.`
+      }
+    `;
+    await sendSMSNotification(userId, smsMessage);
 
     revalidatePath("/admin");
     return parseStringify(updatedAppointment);
   } catch (error) {
     console.error("An error occurred while scheduling an appointment:", error);
+  }
+};
+
+export const sendSMSNotification = async (userId: string, content: string) => {
+  try {
+    const messageToSend = await message.createSms(
+      ID.unique(),
+      content,
+      [],
+      [userId]
+    );
+
+    return parseStringify(messageToSend);
+  } catch (error) {
+    console.error("Unable to send SMS message: ", error);
   }
 };
